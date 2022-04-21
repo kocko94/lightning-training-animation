@@ -44,7 +44,7 @@ export default class App extends Lightning.Component {
         x: 960,
         y: 720,
         text: {
-          text: "Let's start Building!",
+          text: "Let's start building!",
           fontFace: 'Regular',
           fontSize: 64,
           textColor: 0xbbffffff,
@@ -54,6 +54,29 @@ export default class App extends Lightning.Component {
   }
 
   _init() {
+    this.textAnimation = this.tag('Text').animation({
+      duration: 10,
+      repeat: -1,
+      actions: [
+        {
+          p: 'text.text', //property that we'll modify
+          v: {
+            //v should be the property value. 0 is the beginning of the animation
+            0: "Let's start building!",
+            0.33: "Let's start learning!",
+            0.66: "Let's start lightning",
+          },
+        },
+        {
+          p: 'y',
+          v: {
+            0: 720,
+            0.5: 1000,
+            1: 720,
+          },
+        },
+      ],
+    })
     this.tag('Background')
       .animation({
         duration: 15,
@@ -67,5 +90,13 @@ export default class App extends Lightning.Component {
         ],
       })
       .start()
+  }
+
+  _handleLeft() {
+    this.textAnimation.play()
+  }
+
+  _handleRight() {
+    this.textAnimation.pause()
   }
 }
